@@ -13,11 +13,12 @@ if (!supabaseUrl || !supabaseAnonKey) {
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
-if (process.env.NODE_ENV === 'development') {
-  // @ts-ignore
-  window.confirmationResult = null;
-  // @ts-ignore
-  window.recaptchaVerifier = null;
+@ts-expect-error
+declare global {
+  interface Window {
+    recaptchaVerifier: any;
+    confirmationResult: any;
+  }
 }
 
 const Navbar = () => {
@@ -47,16 +48,10 @@ const Navbar = () => {
 
   const handleGoogleSignIn = async () => {
     try {
-      const { data, error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo: window.location.origin
-        }
-      })
-      if (error) throw error
-      setShowSignUpModal(false)
+      const result = await signInWithPopup(auth, googleProvider);
+      setShowSignUpModal(false);
     } catch (error) {
-      console.error('Error signing in with Google:', error)
+      console.error('Error signing in with Google:', error);
     }
   };
 
@@ -102,7 +97,7 @@ const Navbar = () => {
     return phoneRegex.test(phone);
   };
 
-  const handlePhoneSignIn = async (recaptchaResponse = null) => {
+  const handlePhoneSignIn = async () => {
     try {
       setPhoneError('');
       console.log('Starting phone sign-in process...'); // Debug log
