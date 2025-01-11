@@ -4,11 +4,14 @@ import React, { useState, useEffect } from 'react';
 import { Calendar, Users, Clock, MapPin, ChevronRight, Menu, X, Phone, Mail } from 'lucide-react';
 import { createClient } from '@supabase/supabase-js';
 
-// Initialize Supabase client
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error('Missing Supabase environment variables')
+}
+
+const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 if (process.env.NODE_ENV === 'development') {
   // @ts-ignore
