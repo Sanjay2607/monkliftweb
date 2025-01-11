@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Calendar, Users, Clock, MapPin, ChevronRight, Menu, X, Phone, Mail } from 'lucide-react';
+import { Calendar, Users, Clock, MapPin, ChevronRight, Menu, X, Phone } from 'lucide-react';
 import { createClient } from '@supabase/supabase-js';
+import Image from 'next/image';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
@@ -48,7 +49,7 @@ const Navbar = () => {
 
   const handleGoogleSignIn = async () => {
     try {
-      const result = await signInWithPopup(auth, googleProvider);
+      await signInWithPopup(auth, googleProvider);
       setShowSignUpModal(false);
     } catch (error) {
       console.error('Error signing in with Google:', error);
@@ -301,7 +302,13 @@ const Navbar = () => {
                 onClick={handleGoogleSignIn}
                 className="w-full flex items-center justify-center gap-2 bg-white border border-gray-300 text-gray-700 px-6 py-3 rounded-full hover:bg-gray-50"
               >
-                <img src="/google-icon.png" alt="Google" className="w-5 h-5" />
+                <Image 
+                  src="/google-icon.png" 
+                  alt="Google" 
+                  width={20} 
+                  height={20}
+                  className="w-5 h-5"
+                />
                 Continue with Google
               </button>
 
