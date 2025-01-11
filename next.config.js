@@ -1,14 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['*'], // This allows images from any domain - adjust for production
+    domains: ['*'],
     unoptimized: true
   },
   eslint: {
-    ignoreDuringBuilds: true // Temporarily set to true to allow deployment
+    ignoreDuringBuilds: true
   },
   typescript: {
-    ignoreBuildErrors: true // Temporarily set to true to allow deployment
+    ignoreBuildErrors: true
   }
 }
 
