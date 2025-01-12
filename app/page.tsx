@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { Calendar, Users, Clock, MapPin, ChevronRight, Menu, X, Phone } from 'lucide-react';
 import { createClient } from '@supabase/supabase-js';
 import Image from 'next/image';
+import { auth, googleProvider } from '../firebase/config';
+import { signInWithPopup } from 'firebase/auth';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -28,6 +30,7 @@ const Navbar = () => {
   const [confirmationResult, setConfirmationResult] = useState(null);
   const [phoneError, setPhoneError] = useState('');
   const [otpError, setOtpError] = useState('');
+  const [user, setUser] = useState(null);
 
   // Add useEffect to listen to auth state changes
   useEffect(() => {
@@ -37,6 +40,13 @@ const Navbar = () => {
 
     return () => subscription.unsubscribe()
   }, [])
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUser(user);
+    });
+    return () => unsubscribe();
+  }, []);
 
   const handleSignUp = () => {
     setShowSignUpModal(true);
@@ -424,72 +434,60 @@ const LandingPage = () => {
       <section id="events" className="py-16 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-gray-900 mb-8">Upcoming Events</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            {upcomingEvents.map((event, index) => (
-              <div key={index} className="bg-gray-50 rounded-lg p-6 hover:shadow-lg transition-shadow">
-                {event.title === "Morning Yoga Session" && (
-                  <div className="mb-4 rounded-lg overflow-hidden h-48">
-                    <img 
-                      src="/yoga.gif" 
-                      alt="Morning Yoga Session" 
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                )}
-                {event.title === "Strength Training Workshop" && (
-                  <div className="mb-4 rounded-lg overflow-hidden h-48">
-                    <img 
-                      src="/strength.gif" 
-                      alt="Strength Training Workshop" 
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                )}
-                {event.title === "Community Workout" && (
-                  <div className="mb-4 rounded-lg overflow-hidden h-48">
-                    <img 
-                      src="/community.gif" 
-                      alt="Community Workout" 
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                )}
-                <div className="flex justify-between items-start mb-4">
-                  <h3 className="text-xl font-semibold text-gray-900">{event.title}</h3>
-                  <span className="bg-purple-100 text-purple-600 px-3 py-1 rounded-full text-sm">
-                    {event.slots} slots
-                  </span>
-                </div>
-                <div className="space-y-2">
-                  <div className="flex items-center text-gray-600">
-                    <Calendar size={18} className="mr-2" />
-                    {event.date}
-                  </div>
-                  <div className="flex items-center text-gray-600">
-                    <Clock size={18} className="mr-2" />
-                    {event.time}
-                  </div>
-                  <div className="flex items-center text-gray-600">
-                    <MapPin size={18} className="mr-2" />
-                    {event.location}
-                  </div>
-                </div>
-                {event.title === "Morning Yoga Session" ? (
-                  <a 
-                    href="https://docs.google.com/forms/d/e/1FAIpQLScVYo-euQpbDOiWudkxdDrzIpR7Xqm6Tep1ZS84Hy94_DgFrQ/viewform"
-                    className="mt-4 w-full bg-white border border-purple-600 text-purple-600 px-4 py-2 rounded-full hover:bg-purple-50 flex items-center justify-center"
-                  >
-                    Book Now
-                    <ChevronRight size={18} className="ml-1" />
-                  </a>
-                ) : (
-                  <button className="mt-4 w-full bg-white border border-purple-600 text-purple-600 px-4 py-2 rounded-full hover:bg-purple-50 flex items-center justify-center">
-                    Book Now
-                    <ChevronRight size={18} className="ml-1" />
-                  </button>
-                )}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+            {/* Yoga */}
+            <div className="bg-white rounded-lg shadow-md overflow-hidden">
+              <img 
+                src="/yoga.gif" 
+                alt="Yoga" 
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-6">
+                <h3 className="text-2xl font-bold mb-3 text-gray-800">Yoga</h3>
+                <p className="text-gray-800 mb-4 text-lg">
+                  <span className="font-bold">Date & Time:</span> To be announced
+                </p>
+                <p className="text-gray-800 mb-4 text-lg">
+                  <span className="font-bold">Venue:</span> To be announced
+                </p>
               </div>
-            ))}
+            </div>
+
+            {/* Community Workout */}
+            <div className="bg-white rounded-lg shadow-md overflow-hidden">
+              <img 
+                src="/community.gif" 
+                alt="Community Workout" 
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-6">
+                <h3 className="text-2xl font-bold mb-3 text-gray-800">Community Workout</h3>
+                <p className="text-gray-800 mb-4 text-lg">
+                  <span className="font-bold">Date & Time:</span> To be announced
+                </p>
+                <p className="text-gray-800 mb-4 text-lg">
+                  <span className="font-bold">Venue:</span> To be announced
+                </p>
+              </div>
+            </div>
+
+            {/* Strength Workout */}
+            <div className="bg-white rounded-lg shadow-md overflow-hidden">
+              <img 
+                src="/strength.gif" 
+                alt="Strength Workout" 
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-6">
+                <h3 className="text-2xl font-bold mb-3 text-gray-800">Strength Workout</h3>
+                <p className="text-gray-800 mb-4 text-lg">
+                  <span className="font-bold">Date & Time:</span> To be announced
+                </p>
+                <p className="text-gray-800 mb-4 text-lg">
+                  <span className="font-bold">Venue:</span> To be announced
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -556,14 +554,14 @@ const LandingPage = () => {
           <div>
             <h4 className="font-semibold mb-4">Contact</h4>
             <ul className="space-y-2 text-gray-400">
-              <li>monkfitoffice@gmail.com</li>
+              <li>monkliftofficial@gmail.com</li>
               <li>+91 91452 78388</li>
             </ul>
           </div>
           <div>
             <h4 className="font-semibold mb-4">Follow Us</h4>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-white">Instagram</a>
+              <a href="https://www.instagram.com/monkliftofficial/?igsh=dmwybWRkZWlwbWpl" className="text-gray-400 hover:text-white">Instagram</a>
               <a href="#" className="text-gray-400 hover:text-white">Facebook</a>
               <a href="#" className="text-gray-400 hover:text-white">Twitter</a>
             </div>
