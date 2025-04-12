@@ -7,18 +7,18 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-gray-900 shadow-lg fixed w-full z-50">
+    <nav className="bg-white shadow-lg fixed w-full z-50">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           <div className="flex-shrink-0 flex items-center">
-            <span className="text-2xl font-bold text-purple-400">Monklift</span>
+            <span className="text-2xl font-bold text-purple-600">Monklift</span>
           </div>
           
           <div className="hidden md:flex items-center space-x-8">
-            <a href="#events" className="text-gray-300 hover:text-purple-400">Events</a>
-            <a href="#classes" className="text-gray-300 hover:text-purple-400">Classes</a>
-            <a href="#trainers" className="text-gray-300 hover:text-purple-400">Trainers</a>
-            <a href="#contact" className="text-gray-300 hover:text-purple-400">Contact</a>
+            <a href="#events" className="text-gray-600 hover:text-purple-600">Events</a>
+            <a href="#classes" className="text-gray-600 hover:text-purple-600">Classes</a>
+            <a href="#trainers" className="text-gray-600 hover:text-purple-600">Trainers</a>
+            <a href="#contact" className="text-gray-600 hover:text-purple-600">Contact</a>
           </div>
 
           <div className="md:hidden flex items-center">
@@ -52,30 +52,6 @@ const LandingPage = () => {
   const [subscriptionStatus, setSubscriptionStatus] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const upcomingEvents = [
-    {
-      title: "Morning Yoga Session",
-      date: "Feb 15",
-      time: "7:00 AM",
-      location: "Central Park",
-      slots: 15
-    },
-    {
-      title: "Strength Training Workshop",
-      date: "Feb 18",
-      time: "6:00 PM",
-      location: "Main Studio",
-      slots: 10
-    },
-    {
-      title: "Community Workout",
-      date: "Feb 20",
-      time: "9:00 AM",
-      location: "Beach Front",
-      slots: 25
-    }
-  ];
-
   const handleSubscribe = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -102,14 +78,14 @@ const LandingPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900">
+    <div className="min-h-screen bg-gray-100">
       <section className="pt-24 pb-12 px-4 md:pt-32">
         <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-100 mb-6">
+          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
             Transform Your Body,<br />
-            <span className="text-purple-400">Elevate Your Mind</span>
+            <span className="text-purple-600">Elevate Your Mind</span>
           </h1>
-          <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
             Join our community of fitness enthusiasts and experience the perfect blend of strength, flexibility, and mindfulness.
           </p>
           <div className="flex flex-col md:flex-row justify-center gap-4">
@@ -123,34 +99,74 @@ const LandingPage = () => {
         </div>
       </section>
 
-      <section id="events" className="py-16 px-4 bg-gray-800">
+      <section id="events" className="py-16 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-100 mb-8">Upcoming Events</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            {upcomingEvents.map((event, index) => (
-              <div key={index} className="bg-gray-900 rounded-lg p-6 hover:shadow-lg transition-shadow border border-gray-700">
-                <div className="flex justify-between items-start mb-4">
-                  <h3 className="text-xl font-semibold text-gray-100">{event.title}</h3>
-                  <span className="bg-purple-900 text-purple-300 px-3 py-1 rounded-full text-sm">
-                    {event.slots} slots
-                  </span>
-                </div>
+          <h2 className="text-3xl font-bold text-gray-900 mb-8">Upcoming Events</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+            <div className="bg-white rounded-lg shadow-md overflow-hidden">
+              <img 
+                src="/yoga.gif" 
+                alt="Yoga" 
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-6">
+                <h3 className="text-2xl font-bold mb-3 text-gray-800">Yoga</h3>
+                <p className="text-gray-800 mb-4 text-lg">
+                  <span className="font-bold">Date & Time:</span> To be announced
+                </p>
+                <p className="text-gray-800 mb-4 text-lg">
+                  <span className="font-bold">Venue:</span> To be announced
+                </p>
               </div>
-            ))}
+            </div>
+
+            <div className="bg-white rounded-lg shadow-md overflow-hidden">
+              <img 
+                src="/community.gif" 
+                alt="Community Workout" 
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-6">
+                <h3 className="text-2xl font-bold mb-3 text-gray-800">Community Workout</h3>
+                <p className="text-gray-800 mb-4 text-lg">
+                  <span className="font-bold">Date & Time:</span> To be announced
+                </p>
+                <p className="text-gray-800 mb-4 text-lg">
+                  <span className="font-bold">Venue:</span> To be announced
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg shadow-md overflow-hidden">
+              <img 
+                src="/strength.gif" 
+                alt="Strength Workout" 
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-6">
+                <h3 className="text-2xl font-bold mb-3 text-gray-800">Strength Workout</h3>
+                <p className="text-gray-800 mb-4 text-lg">
+                  <span className="font-bold">Date & Time:</span> To be announced
+                </p>
+                <p className="text-gray-800 mb-4 text-lg">
+                  <span className="font-bold">Venue:</span> To be announced
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="py-16 px-4 bg-gray-900">
+      <section className="py-16 px-4">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-100 text-center mb-12">Why Choose Monklift?</h2>
+          <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">Why Choose Monklift?</h2>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="bg-purple-900 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users className="text-purple-300 w-8 h-8" />
+              <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Users className="text-purple-600 w-8 h-8" />
               </div>
-              <h3 className="text-xl font-semibold text-purple-400 mb-2">Expert Trainers</h3>
-              <p className="text-gray-300">Learn from certified professionals who are passionate about your success.</p>
+              <h3 className="text-xl font-semibold text-purple-600 mb-2">Expert Trainers</h3>
+              <p className="text-gray-700">Learn from certified professionals who are passionate about your success.</p>
             </div>
             <div className="text-center">
               <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -170,41 +186,30 @@ const LandingPage = () => {
         </div>
       </section>
 
-      <section className="py-16 px-4 bg-purple-900">
-        <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-white mb-6">Ready to Start Your Fitness Journey?</h2>
-          <p className="text-xl text-purple-200 mb-8 max-w-2xl mx-auto">
-            Join Monklift today and transform your life with our expert-led fitness programs.
-          </p>
-          <button className="bg-gray-900 text-purple-400 px-8 py-3 rounded-full text-lg hover:bg-gray-800">
-            Get Started Now
-          </button>
-        </div>
-      </section>
-
-      <footer className="bg-gray-900 text-white py-12 px-4 border-t border-gray-800">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-8">
-          <div>
-            <h3 className="text-2xl font-bold mb-4 text-purple-400">Monklift</h3>
-            <p className="text-gray-400">Transform your body and mind with our expert-led fitness programs.</p>
-          </div>
-          <div>
-            <h4 className="text-lg font-semibold mb-3">Contact</h4>
-            <ul className="space-y-2 text-gray-400">
-              <li className="hover:text-white transition-colors">monkliftofficial@gmail.com</li>
-              <li className="hover:text-white transition-colors">+91 91452 78388</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="text-lg font-semibold mb-3">Follow Us</h4>
-            <a 
-              href="https://www.instagram.com/monkliftofficial/?igsh=dmwybWRkZWlwbWpl" 
-              className="text-gray-400 hover:text-white transition-colors"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Instagram
-            </a>
+      <footer className="bg-gray-900 text-white py-8">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
+            <div>
+              <h3 className="text-2xl font-bold">Monklift</h3>
+            </div>
+            <div>
+              <h4 className="text-lg font-semibold mb-3">Contact</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li className="hover:text-white transition-colors">monkliftofficial@gmail.com</li>
+                <li className="hover:text-white transition-colors">+91 91452 78388</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-lg font-semibold mb-3">Follow Us</h4>
+              <a 
+                href="https://www.instagram.com/monkliftofficial/?igsh=dmwybWRkZWlwbWpl" 
+                className="text-gray-400 hover:text-white transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Instagram
+              </a>
+            </div>
           </div>
         </div>
       </footer>
